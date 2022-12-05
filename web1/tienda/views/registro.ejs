@@ -4,9 +4,26 @@
     <label>Username:</label>
     <input type="text" id="user" name="user"><br>
     <label>Password:</label>
-    <input type="password" id="pass" name="pass"><br>
+    <input type="password" id="pass" name="pass" minlength="8"><br>
     <label>Repeat Password:</label> 
-    <input type="password" id="pass1" name="pass1">
-    <button type="submit">Submit</button>
+    <input type="password" id="pass1" name="pass1" minlength="8">
+    <button type="submit" onclick="passwordConfirmation()">Submit</button>
 </form>
+<script>
+    function passwordConfirmation() {
+            let password = document.getElementById("pass").value;
+            let confirmPassword = document.getElementById("pass1").value;
+
+            if(password.length < 8 || (confirmPassword.length < 8)){
+                alert("Password must be 8 characters or more! Please change password");
+            } else {
+                
+                if (password == confirmPassword) {
+                    alert("Logged In");
+                } else {
+                    alert("Please make sure your passwords match.");
+                }
+        }
+}
+</script>
 <%- include("footer", {}) %>
