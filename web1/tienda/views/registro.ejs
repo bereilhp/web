@@ -1,12 +1,12 @@
 <%- include("header", {}) %>
 <h1><%= title %> Registro</h1>
-<form method="post" action="/login">
+<form method="post" action="/registro">
     <label>Username:</label>
     <input type="text" id="user" name="user"><br>
     <label>Password:</label>
-    <input type="password" id="pass" name="pass" minlength="8"><br>
+    <input type="password" id="password" name="pass" minlength="8"><br>
     <label>Repeat Password:</label> 
-    <input type="password" id="pass1" name="pass1" minlength="8">
+    <input type="password" id="password1" name="pass1" minlength="8">
     <button type="submit" onclick="passwordConfirmation()">Submit</button>
 </form>
 <script>

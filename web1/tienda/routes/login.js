@@ -16,13 +16,13 @@ router.post('/', function(req, res, next){
                 req.session.message = "Welcome!"
                 res.redirect("/restricted");
             } else {
-                req.session.error = "Incorrect user or password";
+                req.session.error = "Incorrect user or password1";
                 res.redirect("/login");
             }
         });
     } else {
-        req.session.error = "Incorrect user or password";
-        res.redirect("/login");
+        req.session.error = "Incorrect user or password2";
+        res.redirect("/registro");
     }
 });
 
