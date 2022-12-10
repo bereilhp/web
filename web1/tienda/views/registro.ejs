@@ -4,26 +4,29 @@
     <label>Username:</label>
     <input type="text" id="user" name="user"><br>
     <label>Password:</label>
-    <input type="password" id="password" name="pass" minlength="8"><br>
+    <input type="password" id="password" name="pass" minlength="0"><br>
     <label>Repeat Password:</label> 
-    <input type="password" id="password1" name="pass1" minlength="8">
+    <input type="password" id="password1" name="pass1" minlength="0">
+    <br>
+    <br>
+    <button type="button" onclick="passwordConfirmation()">Validate</button>
     <button type="submit" onclick="passwordConfirmation()">Submit</button>
 </form>
 <script>
     function passwordConfirmation() {
-            let password = document.getElementById("pass").value;
-            let confirmPassword = document.getElementById("pass1").value;
+            let password = document.getElementById("password").value;
+            let confirmPassword = document.getElementById("password1").value;
 
             if(password.length < 8 || (confirmPassword.length < 8)){
                 alert("Password must be 8 characters or more! Please change password");
             } else {
                 
                 if (password == confirmPassword) {
-                    alert("Logged In");
+                    alert("Valid");
                 } else {
                     alert("Please make sure your passwords match.");
                 }
-        }
+            }   
 }
 </script>
 <%- include("footer", {}) %>
