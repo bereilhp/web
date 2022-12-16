@@ -50,7 +50,7 @@ app.use('/logout', function(req, res, next){
   })
 })
 
-function restrict(req, res, next){
+function restrict(req, res, next){ //Middleware 
   if(req.session.user){
     next();
   } else {
