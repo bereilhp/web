@@ -1,5 +1,5 @@
 const { MongoClient, ObjectId } = require("mongodb");
-const uri = "mongodb://127.0.0.1:27017";
+const uri = "";
 const client = new MongoClient(uri);
 const connectToDatabase = async () => {
   try { await client.connect();
