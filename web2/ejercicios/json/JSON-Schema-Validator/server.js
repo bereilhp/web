@@ -1,6 +1,7 @@
 const express = require('express');
 const ajv = require("./schemas/data");
 const avatar = require("./json/avatar.json");
+const validate = ajv.getSchema("movie");
 
 const app = express();
 app.use(express.json());
@@ -16,8 +17,14 @@ function validateMovie(json) {
 }
 
 app.post("/jsonSchema", (req, res) => {
-    res.send("JSON FILE CHECKED CHECK TERMINAL FOR ANS")
-    validateMovie(req.body);
+    if(validate(req.body)){
+        res.status(200)
+        res.send("Valido")
+    }else {
+        res.status(400);
+        res.send("No Valido");
+    }
+    //res.send("JSON FILE CHECKED CHECK TERMINAL FOR ANS")
 });
 
 app.get("/jsonBien", (req, res) => {
