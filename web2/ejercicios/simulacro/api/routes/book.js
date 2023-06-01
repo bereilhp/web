@@ -36,8 +36,8 @@ router.get('/', async (req, res) => {
 
 //getBooks() offset Pagination
 router.get('/offset', async (req, res) => {
-  const page = req.query.page ? Math.min(parseInt(req.query.page), MAX_RESULTS) : 1;
-  const size = req.query.size ? parseInt(req.query.size) : MAX_RESULTS;
+  const page = req.query.page ? (parseInt(req.query.page)) : 1;
+  const size = req.query.size ? Math.min(parseInt(req.query.size), MAX_RESULTS) : MAX_RESULTS;
   const offset = (page - 1) * size;
   console.log(page, size, offset);
 
