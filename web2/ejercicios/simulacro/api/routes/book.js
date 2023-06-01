@@ -34,6 +34,41 @@ router.get('/', async (req, res) => {
   res.json({results, next}).status(200);
 });
 
+//getBooks() offset Pagination
+router.get('/offset', async (req, res) => {
+  const page = req.query.page ? Math.min(parseInt(req.query.page), MAX_RESULTS) : 1;
+  const size = req.query.size ? parseInt(req.query.size) : MAX_RESULTS;
+  const offset = (page - 1) * size;
+  console.log(page, size, offset);
+
+
+  try {
+    const dbConnect = dbo.getDb();
+    const results = await dbConnect
+      .collection(COLLECTION)
+      .find() 
+      .sort({ _id:1 })
+      .project({title:1})
+      .skip(offset)
+      .limit(size)
+      .toArray();
+
+      const total_elements = await dbConnect.collection(COLLECTION).countDocuments()
+      const remaining_elements = total_elements- (page * size)
+      let next = null //si no entra a ningun if = null
+      if (remaining_elements <= size && remaining_elements > 0){ //quedan menos elementos que el tamaño de página
+        next = "http://localhost:"+ process.env.PORT + process.env.BASE_URI + "/book/offset?size="+ size + "&page=" +(page + 1)  ;
+      }
+      else if(remaining_elements > size){
+        next = "http://localhost:"+ process.env.PORT + process.env.BASE_URI + "/book/offset?size="+ size + "&page=" +(page + 1) ;
+      } 
+      res.status(200).json({ results, next });
+    } catch (error) {
+      console.log(error)
+      res.status(400).send('Error searching for books');
+    }
+});
+
 //getBookById()
 router.get('/:id', async (req, res) => {
   const dbConnect = dbo.getDb();
