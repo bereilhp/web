@@ -69,6 +69,41 @@ router.get('/offset', async (req, res) => {
     }
 });
 
+router.get('/cursor', async (req, res) => {
+  let size = null; //inicializamos
+  let query_size = parseInt(req.query.size);
+  let envMaxResults = parseInt(process.env.MAX_RESULTS);
+  if (query_size >= 1 && query_size <= envMaxResults){
+    size = query_size
+  }else{
+    size = envMaxResults
+  }
+  //const size = (req.query.size >= 1 && req.query.size <= process.env.MAX_RESULTS) ? req.query.size: process.env.MAX_RESULTS  EN UNA LINEA
+  console.log(typeof(size), typeof(envMaxResults));
+
+  const query = {};
+  if (req.query.next) { 
+    query._id = { $gt: new ObjectId(req.query.next) }; //gt = no repite ultimo elemento, gte =si
+  }
+  
+  try {
+    const dbConnect = dbo.getDb();
+    const results = await dbConnect
+      .collection(COLLECTION)
+      .find(query) 
+      .sort({ _id:1 })
+      .project({title:1})
+      .limit(size)
+      .toArray();
+
+    const next = results.length === size ? results[results.length - 1]._id : null;
+    res.status(200).json({ results, next });
+  } catch (error) {
+    console.log(error)
+    res.status(400).send('Error searching for books');
+  }
+});
+
 //getBookById()
 router.get('/:id', async (req, res) => {
   const dbConnect = dbo.getDb();
