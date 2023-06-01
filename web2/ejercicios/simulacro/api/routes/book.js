@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
   let results = await dbConnect
     .collection(COLLECTION)
     .find(query)
-    .project({_id: 1, title: 1, author: 1 })
+    .project({_id: 1, title: 1, author: 1 }) //.project({ _id: 1, title: 1, author: 1, link: { $concat: ["http://localhost:3010/api/v2/book/", { $tostring: '$_id'}] } })
     .sort({_id: -1})
     .limit(limit)
     .toArray()
